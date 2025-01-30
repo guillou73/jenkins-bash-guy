@@ -7,7 +7,7 @@ pipeline {
                 script {
                     sh '''
                     echo "System Information:"
-                    echo "-------------------"
+                    echo "------------------"
                     echo "Current Date and Time: $(date)"
                     echo "Hostname: $(hostname)"
                     echo "Operating System and Version:"
