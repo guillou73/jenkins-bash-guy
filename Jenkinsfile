@@ -14,7 +14,7 @@ echo ""
 
 # File and Directory Management
 echo "File and Directory Management:"
-echo "-----------------------------"
+echo "----------------------------"
 echo "Files in /tmp/mytempdir:"
 ls -l "/tmp/mytempdir"
 
