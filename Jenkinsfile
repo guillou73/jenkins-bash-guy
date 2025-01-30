@@ -1,58 +1,99 @@
-#!/bin/bash
+pipeline {
+    agent any
 
-# System Information
-echo "System Information:"
-echo "------------------"
-echo "Current Date and Time: $(date)"
-echo "Hostname: $(hostname)"
-echo "Operating System and Version:"
-cat /etc/os-release
+    stages {
+        stage('System Information') {
+            steps {
+                script {
+                    sh '''
+                    echo "System Information:"
+                    echo "-------------------"
+                    echo "Current Date and Time: $(date)"
+                    echo "Hostname: $(hostname)"
+                    echo "Operating System and Version:"
+                    cat /etc/os-release
 
-echo "System Uptime: $(uptime)"
-echo "Current User: $(whoami)"
-echo ""
+                    echo "System Uptime: $(uptime)"
+                    echo "Current User: $(whoami)"
+                    '''
+                }
+            }
+        }
 
-# File and Directory Management
-echo "File and Directory Management:"
-echo "----------------------------"
-echo "Files in /tmp/mytempdir:"
-ls -l "/tmp/mytempdir"
+        stage('File and Directory Management') {
+            steps {
+                script {
+                    sh '''
+                    echo "File and Directory Management:"
+                    echo "-----------------------------"
+                    echo "Files in /tmp/mytempdir:"
+                    ls -l "/tmp/mytempdir"
 
-echo "Disk usage of /tmp/mytempdir:"
-du -sh "/tmp/mytempdir"
-echo ""
+                    echo "Disk usage of /tmp/mytempdir:"
+                    du -sh "/tmp/mytempdir"
+                    '''
+                }
+            }
+        }
 
-# Process Management
-echo "Process Management:"
-echo "--------------------"
-ps aux | head -n 10
-echo "Listing first 10 running processes..."
-echo ""
+        stage('Process Management') {
+            steps {
+                script {
+                    sh '''
+                    echo "Process Management:"
+                    echo "--------------------"
+                    ps aux | head -n 10
+                    echo "Listing first 10 running processes..."
+                    '''
+                }
+            }
+        }
 
-# User and Group Management
-echo "User and Group Management:"
-echo "--------------------------"
-echo "Current user groups: $(groups)"
-echo ""
+        stage('User and Group Management') {
+            steps {
+                script {
+                    sh '''
+                    echo "User and Group Management:"
+                    echo "--------------------------"
+                    echo "Current user groups: $(groups)"
+                    '''
+                }
+            }
+        }
 
-# Networking
-echo "Networking:"
-echo "-----------"
-echo "Network Interfaces:"
-ip addr
-echo ""
+        stage('Networking') {
+            steps {
+                script {
+                    sh '''
+                    echo "Networking:"
+                    echo "-----------"
+                    echo "Network Interfaces:"
+                    ip addr
 
-echo "Listening Network Sockets:"
-netstat -lntp | head -n 10
-echo ""
+                    echo "Listening Network Sockets:"
+                    netstat -lntp | head -n 10
+                    '''
+                }
+            }
+        }
 
-# System Resources
-echo "System Resources:"
-echo "------------------"
-df -h
-echo ""
+        stage('System Resources') {
+            steps {
+                script {
+                    sh '''
+                    echo "System Resources:"
+                    echo "------------------"
+                    df -h
+                    free -h
+                    '''
+                }
+            }
+        }
+    }
 
-free -h
-echo ""
-
-echo "Script execution completed."
+    post {
+        always {
+            echo "Script execution completed."
+        }
+    }
+}
